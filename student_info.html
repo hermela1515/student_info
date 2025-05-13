@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>student-information</title>
+    <style>
+        #student-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .student-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid lightgrey;
+            border-radius: 4px;
+            padding: 4px;
+        }
+    </style>
+
+</head>
+<body>
+    <fieldset>
+        <label>Fullname</label>
+        <input type="text"id="fullname">
+    </fieldset>
+    <fieldset>
+        <lable>Age</lable>
+        <input type="number"id="age">
+    </fieldset>
+    <fieldset>
+        <lable>Department</lable>
+        <input type="text"id="dep">
+    </fieldset>
+    <fieldset>
+        <lable>Grade</lable>
+        <input type="text"id="grade">
+    </fieldset>
+    <button onclick="addstudent()">add</button>
+    <button onclick="savestudent()">save</button>
+    <fieldset>
+    <div id="student_list"></div>
+    </fieldset>
+    </body>
+    <script>
+        studentinfo=[]
+        const fullnameinput=document.getElementById('fullname')
+        const ageinput=document.getElementById('age')
+        const departmentinput=document.getElementById('dep')
+        const gradeinput=document.getElementById('grade')
+        const studentlist=document.getElementById('student_list')
+        function addstudent(){
+            const fullname=fullnameinput.value
+            const age=ageinput.value
+            const department=departmentinput.value
+            const grade=gradeinput.value
+            const student={
+                fullname,
+                age,
+                department,
+                grade
+            }
+            studentinfo.push(student)
+            moreinfo(student)
+        }
+        function moreinfo(studentObj){
+            const morestudentinfo=document.createElement('div')
+            morestudentinfo.classList.add("student-detail")
+            const fullnameelement=document.createElement('span')
+            const ageelement=document.createElement('span')
+            const departmentelement=document.createElement('span')
+            const gradeelement=document.createElement('span')
+            const DeleteBtn=document.createElement('button')
+            fullnameelement.innerText="FullName:"+studentObj.fullname
+            ageelement.innerText="Age:"+studentObj.age
+            departmentelement.innerText="Department:"+studentObj.department
+            gradeelement.innerText= "grade:"+studentObj.grade
+            DeleteBtn.innerText="Delete"
+            morestudentinfo.append(fullnameelement)
+            morestudentinfo.append(ageelement)
+            morestudentinfo.append(departmentelement)
+            morestudentinfo.append(gradeelement)
+            studentlist.append(morestudentinfo)
+            morestudentinfo.append(DeleteBtn)
+            DeleteBtn.addEventListener('click',function(){
+                const idx=studentinfo.indexOf(studentObj)
+                studentinfo.splice(idx,1)
+                studentlist.innerHTML=""
+                studentinfo.forEach(e => moreinfo(e))
+            })
+
+            
+
+        }
+        studentinfo.forEach(e =>moreinfo(e))
+            
+        
+    </script>
+
+</html>
